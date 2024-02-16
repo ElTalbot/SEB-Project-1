@@ -1,3 +1,78 @@
 * {
   box-sizing: border-box;
 }
+
+/* Styling the main divs */
+.grid-wrapper {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  height: 700px;
+  width: 900px;
+}
+
+/* this holds the game */
+.grid {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+  height: 700px;
+  width: 900px;
+  background-image: url(../assets/outback-landscape-acrylics\ copy.png);
+}
+
+/* this is the welcome page */
+.welcome-page {
+  width: inherit;
+  height: inherit;
+  align-items: center;
+}
+
+/* this toggles the welcome page and grid when 'start' is pressed */
+.hidden {
+  display: none;
+}
+
+/* this styles the individual divs in the grid */
+.grid div {
+  border: 1px solid lightgrey;
+  flex-grow: 1;
+  height: 14.2%;
+  width: 11%;
+}
+
+/* Creating the moving parts  */
+.grid div.kangaroo {
+  background-image: url(../assets/download.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.grid div.joey {
+  background-image: url(../assets/istockphoto-666853146-612x612.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.grid div.dingo {
+  background-image: url(../assets/images.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.grid div.log {
+  background-image: url(../assets/hqdefault.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+.grid div.truck {
+  background-image: url(../assets/sketch-pick-up-truck-vector-19341681-removebg-preview.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
