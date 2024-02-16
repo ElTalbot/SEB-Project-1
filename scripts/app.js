@@ -37,23 +37,55 @@ function addKangaroo(position) {
   cells[position].classList.add("kangaroo");
 }
 
-// adds the joey and moves
+// adds the joey
 function addJoey(position) {
   cells[position].classList.add("joey");
 }
 
+// removes the joey
+function removeJoey(position) {
+  cells[position].classList.remove("joey");
+}
+
+// moves the joey
+function handleKeyDown(event) {
+  removeJoey(joeyCurrentPosition);
+  // left is 37
+  if (event.keyCode === 37 && joeyCurrentPosition % width !== 0) {
+    joeyCurrentPosition--;
+    // up is 38
+  } else if (event.keyCode === 38 && joeyCurrentPosition >= width) {
+    joeyCurrentPosition -= width;
+    // right is 39
+  } else if (
+    event.keyCode === 39 &&
+    joeyCurrentPosition % width !== width - 1
+  ) {
+    joeyCurrentPosition++;
+    // down is 40
+  } else if (event.keyCode === 40 && joeyCurrentPosition < cellCount - width) {
+    joeyCurrentPosition += width;
+  }
+
+  addJoey(joeyCurrentPosition);
+
+  console.log(`position ${joeyCurrentPosition}`);
+}
+document.addEventListener("keydown", handleKeyDown);
+
+// adds the dingo
 function addDingo(position) {
   cells[position].classList.add("dingo");
 }
 
+// adds the log
 function addLog(position) {
   cells[position].classList.add("log");
 }
 
+// adds the truck
 function addTruck(position) {
   cells[position].classList.add("truck");
 }
-
-// adds the dingo
 
 document.addEventListener("click", startGame);
