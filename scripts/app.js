@@ -13,11 +13,9 @@ const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 const kangarooCurrentPosition = 6;
 let joeyCurrentPosition = 62;
-let dingoCurrentPosition = 53;
-let logCurrentPosition = 35;
-let truckCurrentPosition = [17, 19, 21];
-
-let gameSpeed = 1000;
+let dingoCurrentPositions = [51, 48, 45];
+let logCurrentPositions = [33, 30, 27];
+let truckCurrentPositions = [15, 12, 9];
 
 // What happens when the 'start' button is clicked
 function startGame(event) {
@@ -30,13 +28,9 @@ function startGame(event) {
   }
   addKangaroo(kangarooCurrentPosition);
   addJoey(joeyCurrentPosition);
-  addDingo(dingoCurrentPosition);
-  addLog(logCurrentPosition);
-  addTruck(truckCurrentPosition);
-
-  dingoMove();
-  logMove();
-  truckMove();
+  addDingo(dingoCurrentPositions);
+  addLog(logCurrentPositions);
+  addTruck(truckCurrentPositions);
 }
 
 // adds the kangaroo - remains in one place
@@ -100,107 +94,88 @@ function handleKeyDown(event) {
 }
 document.addEventListener("keydown", handleKeyDown);
 
-// the truck needs to move from cell[17] to cell[9] and this needs to be a continuous movement
-
-function addTruck(position) {
-  cells[position].classList.add("truck");
-}
-function removeTruck() {
-  const truck = document.querySelector(".truck");
-  if (!truck) {
-    return true;
+// TRUCK CONTROLS --------------------------
+function addTruck(truckPosition) {
+  for (let i = 0; i < truckPosition.length; i++) {
+    cells[truckPosition[i]].classList.add("truck");
   }
-  truck.classList.remove("truck");
-  return false;
 }
-function truckMove() {
-  let truckTargetPosition = 17;
-  let truckNewLocation = truckTargetPosition;
-  let truckMoving = false;
-  timer = setInterval(() => {
-    removeTruck();
-    if (truckMoving) {
-      truckNewLocation++;
-      if (truckNewLocation >= truckTargetPosition) {
-        truckMoving = false;
-      }
-    } else {
-      truckNewLocation--;
-      if (truckNewLocation < 9) {
-        truckNewLocation = truckTargetPosition;
-      }
-    }
-
-    addTruck(truckNewLocation);
-  }, gameSpeed);
-}
-
-// the log needs to move from cell[35] to cell[27] and this needs to be a continuous movement
-
-function addLog(position) {
-  cells[position].classList.add("log");
-}
-function removeLog() {
-  const log = document.querySelector(".log");
-  if (!log) {
-    return true;
+function removeTruck(truckPosition) {
+  for (let i = 0; i < truckPosition.length; i++) {
+    cells[truckPosition[i]].classList.remove("truck");
   }
-  log.classList.remove("log");
-  return false;
 }
-function logMove() {
-  let logTargetPosition = 35;
-  let logNewLocation = logTargetPosition;
-  let logMoving = false;
+
+function truckMove(interval) {
   timer = setInterval(() => {
-    removeLog();
-    if (logMoving) {
-      logNewLocationewLocation++;
-      if (logNewLocationewLocation >= logTargetPosition) {
-        logMoving = false;
-      }
+    removeTruck(truckCurrentPositions);
+    if (truckCurrentPositions.includes(17)) {
+      truckCurrentPositions = [15, 12, 9];
     } else {
-      logNewLocation--;
-      if (logNewLocation < 27) {
-        logNewLocation = logTargetPosition;
-      }
+      console.log(truckCurrentPositions);
+      truckCurrentPositions = truckCurrentPositions.map((element) => {
+        return (element += 1);
+      });
     }
-
-    addLog(logNewLocation);
-  }, gameSpeed);
+    addTruck(truckCurrentPositions);
+  }, interval);
 }
+truckMove(2000);
 
-// the dingo needs to move from cell[45] to cell[53] and this needs to be a continuous movement
-function addDingo(position) {
-  cells[position].classList.add("dingo");
-}
-function removeDingo() {
-  const dingo = document.querySelector(".dingo");
-  if (!dingo) {
-    return true;
+// LOG CONTROLS -------------------------------
+function addLog(logPosition) {
+  for (let i = 0; i < logPosition.length; i++) {
+    cells[logPosition[i]].classList.add("log");
   }
-  dingo.classList.remove("dingo");
-  return false;
 }
-function dingoMove() {
-  let targetPosition = 53;
-  let newLocation = targetPosition;
-  let moving = false;
+function removeLog(logPosition) {
+  for (let i = 0; i < logPosition.length; i++) {
+    cells[logPosition[i]].classList.remove("log");
+  }
+}
+
+function logMove(interval) {
   timer = setInterval(() => {
-    removeDingo();
-    if (moving) {
-      newLocation++;
-      if (newLocation >= targetPosition) {
-        moving = false;
-      }
+    removeLog(logCurrentPositions);
+    if (logCurrentPositions.includes(35)) {
+      logCurrentPositions = [33, 30, 27];
     } else {
-      newLocation--;
-      if (newLocation < 45) {
-        newLocation = targetPosition;
-      }
+      console.log(logCurrentPositions);
+      logCurrentPositions = logCurrentPositions.map((element) => {
+        return (element += 1);
+      });
     }
-    addDingo(newLocation);
-  }, gameSpeed);
+    addLog(logCurrentPositions);
+  }, interval);
 }
+logMove(2000);
+
+// DINGO CONTROLS -----------------------
+function addDingo(dingoPosition) {
+  for (let i = 0; i < dingoPosition.length; i++) {
+    cells[dingoPosition[i]].classList.add("dingo");
+  }
+}
+function removeDingo(dingoPosition) {
+  for (let i = 0; i < dingoPosition.length; i++) {
+    cells[dingoPosition[i]].classList.remove("dingo");
+  }
+}
+
+function dingoMove(interval) {
+  timer = setInterval(() => {
+    removeDingo(dingoCurrentPositions);
+    if (dingoCurrentPositions.includes(53)) {
+      dingoCurrentPositions = [51, 48, 45];
+    } else {
+      console.log(dingoCurrentPositions);
+      dingoCurrentPositions = dingoCurrentPositions.map((element) => {
+        return (element += 1);
+      });
+    }
+    addDingo(dingoCurrentPositions);
+  }, interval);
+}
+dingoMove(2000);
 
 start.addEventListener("click", startGame);
