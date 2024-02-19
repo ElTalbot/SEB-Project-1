@@ -70,6 +70,7 @@
   background-size: contain;
   cursor: pointer;
 }
+
 .grid div.truck {
   background-image: url(../assets/sketch-pick-up-truck-vector-19341681-removebg-preview.png);
   background-repeat: no-repeat;

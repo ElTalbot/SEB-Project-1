@@ -9,14 +9,14 @@ const width = 9;
 const height = 7;
 const cellCount = width * height;
 const cells = [];
+const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 const kangarooCurrentPosition = 6;
 let joeyCurrentPosition = 62;
 let dingoCurrentPosition = 53;
 let logCurrentPosition = 35;
-let truckCurrentPosition = 17;
+let truckCurrentPosition = [17, 19, 21];
 
-let isPlaying = true;
 let gameSpeed = 1000;
 
 // What happens when the 'start' button is clicked
@@ -54,6 +54,13 @@ function removeJoey(position) {
   cells[position].classList.remove("joey");
 }
 
+// a function that initiates the collision
+function collisionImpact() {
+  removeJoey(joeyCurrentPosition);
+  joeyCurrentPosition = 62;
+  addJoey(joeyCurrentPosition);
+}
+
 // moves the joey
 function handleKeyDown(event) {
   removeJoey(joeyCurrentPosition);
@@ -73,10 +80,23 @@ function handleKeyDown(event) {
   } else if (event.keyCode === 40 && joeyCurrentPosition < cellCount - width) {
     joeyCurrentPosition += width;
   }
+  if (cells[joeyCurrentPosition].classList.contains("dingo")) {
+    collisionImpact();
+  }
+  if (cells[joeyCurrentPosition].classList.contains("truck")) {
+    collisionImpact();
+  }
+
+  if (
+    !cells[joeyCurrentPosition].classList.contains("log") &&
+    billabongArray.includes(joeyCurrentPosition)
+  ) {
+    collisionImpact();
+  }
 
   addJoey(joeyCurrentPosition);
 
-  console.log(`position ${joeyCurrentPosition}`);
+  // console.log(`position ${joeyCurrentPosition}`);
 }
 document.addEventListener("keydown", handleKeyDown);
 
@@ -179,9 +199,8 @@ function dingoMove() {
         newLocation = targetPosition;
       }
     }
-
     addDingo(newLocation);
   }, gameSpeed);
 }
 
-document.addEventListener("click", startGame);
+start.addEventListener("click", startGame);
