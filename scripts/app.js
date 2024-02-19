@@ -13,8 +13,8 @@ const cells = [];
 const kangarooCurrentPosition = 6;
 let joeyCurrentPosition = 62;
 let dingoCurrentPosition = 53;
-let logCurrentPosition = 32;
-let truckCurrentPosition = 14;
+let logCurrentPosition = 35;
+let truckCurrentPosition = 17;
 
 let isPlaying = true;
 let gameSpeed = 1000;
@@ -35,6 +35,8 @@ function startGame(event) {
   addTruck(truckCurrentPosition);
 
   dingoMove();
+  logMove();
+  truckMove();
 }
 
 // adds the kangaroo - remains in one place
@@ -78,11 +80,80 @@ function handleKeyDown(event) {
 }
 document.addEventListener("keydown", handleKeyDown);
 
-// adds the dingo
+// the truck needs to move from cell[17] to cell[9] and this needs to be a continuous movement
+
+function addTruck(position) {
+  cells[position].classList.add("truck");
+}
+function removeTruck() {
+  const truck = document.querySelector(".truck");
+  if (!truck) {
+    return true;
+  }
+  truck.classList.remove("truck");
+  return false;
+}
+function truckMove() {
+  let truckTargetPosition = 17;
+  let truckNewLocation = truckTargetPosition;
+  let truckMoving = false;
+  timer = setInterval(() => {
+    removeTruck();
+    if (truckMoving) {
+      truckNewLocation++;
+      if (truckNewLocation >= truckTargetPosition) {
+        truckMoving = false;
+      }
+    } else {
+      truckNewLocation--;
+      if (truckNewLocation < 9) {
+        truckNewLocation = truckTargetPosition;
+      }
+    }
+
+    addTruck(truckNewLocation);
+  }, gameSpeed);
+}
+
+// the log needs to move from cell[35] to cell[27] and this needs to be a continuous movement
+
+function addLog(position) {
+  cells[position].classList.add("log");
+}
+function removeLog() {
+  const log = document.querySelector(".log");
+  if (!log) {
+    return true;
+  }
+  log.classList.remove("log");
+  return false;
+}
+function logMove() {
+  let logTargetPosition = 35;
+  let logNewLocation = logTargetPosition;
+  let logMoving = false;
+  timer = setInterval(() => {
+    removeLog();
+    if (logMoving) {
+      logNewLocationewLocation++;
+      if (logNewLocationewLocation >= logTargetPosition) {
+        logMoving = false;
+      }
+    } else {
+      logNewLocation--;
+      if (logNewLocation < 27) {
+        logNewLocation = logTargetPosition;
+      }
+    }
+
+    addLog(logNewLocation);
+  }, gameSpeed);
+}
+
+// the dingo needs to move from cell[45] to cell[53] and this needs to be a continuous movement
 function addDingo(position) {
   cells[position].classList.add("dingo");
 }
-
 function removeDingo() {
   const dingo = document.querySelector(".dingo");
   if (!dingo) {
@@ -91,44 +162,26 @@ function removeDingo() {
   dingo.classList.remove("dingo");
   return false;
 }
-
-// the dingo needs to move from cell[53] to cell[61] and this needs to be a continuous movement
-//
 function dingoMove() {
-  let targetPosition = 61;
-  let newLocation = dingoCurrentPosition;
-  let moving = true;
+  let targetPosition = 53;
+  let newLocation = targetPosition;
+  let moving = false;
   timer = setInterval(() => {
     removeDingo();
     if (moving) {
       newLocation++;
-      if (newLocation < targetPosition) {
-        newLocation = dingoCurrentPosition;
+      if (newLocation >= targetPosition) {
         moving = false;
       }
     } else {
       newLocation--;
-      if (newLocation > dingoCurrentPosition) {
+      if (newLocation < 45) {
         newLocation = targetPosition;
-        moving = true;
       }
     }
 
     addDingo(newLocation);
   }, gameSpeed);
 }
-// Need to identify the cells that will contain the dingo
-// If the cell contains the dingo it needs be removed after a short amount of time
-// the dingo then needs to be added to the cell one index to the left of the one it was just in
-// this needs to continue until the dingo moves all the way across the row
-// when it reaches the last cell in the row it needs to disappear and start back at the first cell in the row
-// adds the log
-function addLog(position) {
-  cells[position].classList.add("log");
-}
 
-// adds the truck
-function addTruck(position) {
-  cells[position].classList.add("truck");
-}
 document.addEventListener("click", startGame);
