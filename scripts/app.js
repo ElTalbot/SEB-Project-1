@@ -6,8 +6,12 @@ const gridGame = document.querySelector(".grid");
 const welcomePage = document.querySelector(".welcome-page");
 const score = document.querySelector(".score-board");
 const endGame = document.querySelector(".end-game");
-const startAgain = document.getElementById("restart");
 const winGame = document.querySelector(".win-game");
+
+// reset buttons
+const startAgain = document.getElementById("restart");
+const tryAgain = document.getElementById("try-again");
+const playAgain = document.getElementById("play-again");
 
 const width = 9;
 const height = 7;
@@ -25,6 +29,7 @@ const livesDisplay = document.getElementById("lives");
 const livesPopUp = document.querySelector(".lives-pop-up");
 let textHighScore = document.getElementById("high-score");
 const totalEndGame = document.getElementById("total-end-game");
+const highScore = localStorage.getItem("high-score");
 
 // --------------------------- VARIABLES DEFINING THE ELEMENT POSITIONS -------------------------------------
 
@@ -57,6 +62,7 @@ function startGame() {
   welcomePage.classList.add("hidden");
   gridGame.classList.remove("hidden");
   score.classList.remove("hidden");
+  textHighScore.innerHTML = highScore;
   truckMove(2000);
   logMove(2000);
   dingoMove(2000);
@@ -125,6 +131,8 @@ function obstacleCollision() {
   if (!lives) {
     endOfGame();
   }
+  livesDisplay.innerHTML = lives ? "❤️".repeat(lives) : "🥹";
+
   if (cells[joeyCurrentPosition].classList.contains("kangaroo")) {
     winTheGame();
     joeyCurrentPosition = 62;
@@ -185,6 +193,7 @@ function endOfGame() {
   removeFoodOne(foodScoreOne);
   removeFoodTwo(foodScoreTwo);
   console.log(`Your score is ${playerScore}`);
+  foodScoring();
 }
 
 //  ------------------------------- WIN GAME FUNCTION ------------------------------------------------------------------------
@@ -221,6 +230,18 @@ function reset() {
 }
 
 // ------------------------------ SCORING ------------------------------------------------------
+
+function totalScoring() {
+  playerScore = playerScore + 400;
+  scoreDisplay.textContent = playerScore;
+  scorePopUp.textContent = playerScore;
+  if (!highScore || playerScore > highScore) {
+    localStorage.setItem("high-score", playerScore);
+  }
+  textHighScore.innerHTML = highScore;
+  console.log(`high score is ${highScore}`);
+}
+
 function foodScoring() {
   playerScore = playerScore + 100;
   scoreDisplay.textContent = playerScore;
@@ -230,21 +251,10 @@ function foodScoring() {
   } else if (cells[foodScoreTwo].classList.contains("joey")) {
     removeFoodTwo(foodScoreTwo);
   }
-}
-
-function totalScoring() {
-  playerScore = playerScore + 400;
-  scoreDisplay.textContent = playerScore;
-  scorePopUp.textContent = playerScore;
-  const highScore = localStorage.getItem("high-score");
-  if (!highScore || playerScore > highScore) {
-    localStorage.setItem("high-score", playerScore);
-  }
   textHighScore.innerHTML = highScore;
-  console.log(`high score is ${highScore}`);
 }
 
-document.addEventListener("click", reset);
+startAgain.addEventListener("click", reset);
 document.addEventListener("keydown", handleKeyDown);
 
 // ---------------------------------- TRUCK CONTROLS - ADD, REMOVE, MOVE ----------------------------------------------------
@@ -329,3 +339,5 @@ function dingoMove(interval) {
 
 startButton.addEventListener("click", startGame);
 startAgain.addEventListener("click", reset);
+tryAgain.addEventListener("click", reset);
+playAgain.addEventListener("click", reset);
