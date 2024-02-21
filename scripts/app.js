@@ -5,8 +5,9 @@ const startButton = document.getElementById("start");
 const gridGame = document.querySelector(".grid");
 const welcomePage = document.querySelector(".welcome-page");
 const score = document.querySelector(".score-board");
-const gameOver = document.querySelector(".game-over");
+const endGame = document.querySelector(".end-game");
 const startAgain = document.getElementById("restart");
+const winGame = document.querySelector(".win-game");
 
 const width = 9;
 const height = 7;
@@ -18,9 +19,12 @@ const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 
 let playerScore = 0;
 const scoreDisplay = document.getElementById("total");
+const scorePopUp = document.querySelector(".total-pop-up");
 let lives = 8;
 const livesDisplay = document.getElementById("lives");
+const livesPopUp = document.querySelector(".lives-pop-up");
 let textHighScore = document.getElementById("high-score");
+const totalEndGame = document.getElementById("total-end-game");
 
 // --------------------------- VARIABLES DEFINING THE ELEMENT POSITIONS -------------------------------------
 
@@ -30,8 +34,8 @@ let dingoCurrentPositions = [51, 48, 45];
 let logCurrentPositions = [33, 30, 27];
 let truckCurrentPositions = [15, 12, 9];
 
-const dingoPassedArray = [36, 37, 38, 39, 40, 41, 42, 43, 44];
-const logPassedArray = [27, 26, 25, 24, 23, 22, 21, 20, 19];
+const foodScoreOne = 40;
+const foodScoreTwo = 24;
 
 // --------------------------- OBSTACLE TIMERS -------------------------------------------------------------
 dingoTimer = null;
@@ -81,6 +85,27 @@ function removeJoey(position) {
   cells[position].classList.remove("joey");
 }
 
+// adds the food
+function addFoodOne(position) {
+  cells[position].classList.add("food");
+}
+addFoodOne(foodScoreOne);
+
+// removes the food
+function removeFoodOne(position) {
+  cells[position].classList.remove("food");
+}
+
+function addFoodTwo(position) {
+  cells[position].classList.add("food");
+}
+addFoodTwo(foodScoreTwo);
+
+// removes the food
+function removeFoodTwo(position) {
+  cells[position].classList.remove("food");
+}
+
 // -------------------------------- OBSTACLE COLLISION FUNCTION ------------------------------------------------------------------
 function obstacleCollision() {
   if (
@@ -94,12 +119,14 @@ function obstacleCollision() {
     addJoey(joeyCurrentPosition);
     lives = lives - 1;
     livesDisplay.innerHTML = "❤️".repeat(lives);
+    livesPopUp.innerHTML = "❤️".repeat(lives);
+    totalEndGame.textContent = playerScore;
   }
   if (!lives) {
-    endGame();
+    endOfGame();
   }
   if (cells[joeyCurrentPosition].classList.contains("kangaroo")) {
-    winGame();
+    winTheGame();
     joeyCurrentPosition = 62;
   }
 }
@@ -136,49 +163,16 @@ function handleKeyDown(event) {
   ) {
     obstacleCollision();
   }
-  if (
-    dingoPassedArray.includes(joeyCurrentPosition) ||
-    logPassedArray.includes(joeyCurrentPosition)
-  ) {
-    playerScore = playerScore + 100;
-    scoreDisplay.textContent = playerScore;
-  }
   addJoey(joeyCurrentPosition);
 
-  // console.log(`position ${joeyCurrentPosition}`);
+  if (cells[joeyCurrentPosition].classList.contains("food")) {
+    foodScoring();
+  }
 }
 
 // ------------------------------- END GAME FUNCTION ----------------------------------------------------------------------------
-function endGame() {
-  clearInterval(logTimer);
-  clearInterval(truckTimer);
-  clearInterval(dingoTimer);
-  removeDingo(dingoCurrentPositions);
-  removeTruck(truckCurrentPositions);
-  removeLog(logCurrentPositions);
-  removeJoey(joeyCurrentPosition);
-  removeKangaroo(kangarooCurrentPosition);
-  console.log(`Your score is ${playerScore}`);
-
-  // const highScore = localStorage.getItem("high-score");
-  // if (!highScore || playerScore > highScore) {
-  //   localStorage.setItem("high-score", playerScore);
-  // }
-  // setTimeout(() => {
-  //   if (highScore >= playerScore) {
-  //     alert(`Your score was ${playerScore} but the high score is ${highScore}`);
-  //   } else {
-  //     alert(`New high score! ${playerScore}`);
-  //   }
-  // }, 50);
-  // console.log(`high score is ${highScore}`);
-  // textHighScore.innerHTML = highScore;
-}
-
-//  ------------------------------- WIN GAME FUNCTION ------------------------------------------------------------------------
-
-function winGame() {
-  gameOver.classList.remove("hidden");
+function endOfGame() {
+  endGame.classList.remove("hidden");
   gridGame.classList.add("hidden");
   clearInterval(logTimer);
   clearInterval(truckTimer);
@@ -188,19 +182,66 @@ function winGame() {
   removeLog(logCurrentPositions);
   removeJoey(joeyCurrentPosition);
   removeKangaroo(kangarooCurrentPosition);
-  console.log(`win`);
+  removeFoodOne(foodScoreOne);
+  removeFoodTwo(foodScoreTwo);
+  console.log(`Your score is ${playerScore}`);
+}
+
+//  ------------------------------- WIN GAME FUNCTION ------------------------------------------------------------------------
+
+function winTheGame() {
+  winGame.classList.remove("hidden");
+  gridGame.classList.add("hidden");
+  clearInterval(logTimer);
+  clearInterval(truckTimer);
+  clearInterval(dingoTimer);
+  removeDingo(dingoCurrentPositions);
+  removeTruck(truckCurrentPositions);
+  removeLog(logCurrentPositions);
+  removeJoey(joeyCurrentPosition);
+  removeKangaroo(kangarooCurrentPosition);
+  totalScoring();
 }
 
 //  -------------------------------- RESET GAME FUNCTION --------------------------------------------------------------------
 function reset() {
   playerScore = 0;
   scoreDisplay.textContent = playerScore;
+  scorePopUp.textContent = playerScore;
   lives = 8;
   livesDisplay.innerHTML = "❤️".repeat(lives);
+  livesPopUp.innerHTML = "❤️".repeat(lives);
   startGame();
   addJoey(joeyCurrentPosition);
   addKangaroo(kangarooCurrentPosition);
-  gameOver.classList.add("hidden");
+  addFoodOne(foodScoreOne);
+  addFoodTwo(foodScoreTwo);
+  endGame.classList.add("hidden");
+  winGame.classList.add("hidden");
+}
+
+// ------------------------------ SCORING ------------------------------------------------------
+function foodScoring() {
+  playerScore = playerScore + 100;
+  scoreDisplay.textContent = playerScore;
+  scorePopUp.textContent = playerScore;
+  if (cells[foodScoreOne].classList.contains("joey")) {
+    removeFoodOne(foodScoreOne);
+  } else if (cells[foodScoreTwo].classList.contains("joey")) {
+    removeFoodTwo(foodScoreTwo);
+  }
+}
+
+function totalScoring() {
+  playerScore = playerScore + 400;
+  scoreDisplay.textContent = playerScore;
+  scorePopUp.textContent = playerScore;
+  const highScore = localStorage.getItem("high-score");
+  if (!highScore || playerScore > highScore) {
+    localStorage.setItem("high-score", playerScore);
+  }
+  textHighScore.innerHTML = highScore;
+  console.log(`high score is ${highScore}`);
 }
 
 document.addEventListener("click", reset);
