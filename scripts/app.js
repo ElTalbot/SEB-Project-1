@@ -1,9 +1,12 @@
 console.log("Hello world!");
 
-// Variables defining the grid and welcome page
+// ------------------------VARIABLES DEFINING BUTTONS, GRID, WELCOME AND GAMEOVER PAGES ----------------------------------------
 const startButton = document.getElementById("start");
 const gridGame = document.querySelector(".grid");
 const welcomePage = document.querySelector(".welcome-page");
+const score = document.querySelector(".score-board");
+const gameOver = document.querySelector(".game-over");
+const startAgain = document.getElementById("restart");
 
 const width = 9;
 const height = 7;
@@ -11,51 +14,97 @@ const cellCount = width * height;
 const cells = [];
 const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 
+// -------------------------- VARIABLES DEFINING SCORES AND LIVES ------------------------------------------
+
+let playerScore = 0;
+const scoreDisplay = document.getElementById("total");
+let lives = 8;
+const livesDisplay = document.getElementById("lives");
+let textHighScore = document.getElementById("high-score");
+
+// --------------------------- VARIABLES DEFINING THE ELEMENT POSITIONS -------------------------------------
+
 const kangarooCurrentPosition = 6;
 let joeyCurrentPosition = 62;
 let dingoCurrentPositions = [51, 48, 45];
 let logCurrentPositions = [33, 30, 27];
 let truckCurrentPositions = [15, 12, 9];
 
-// What happens when the 'start' button is clicked
-function startGame(event) {
-  welcomePage.classList.add("hidden");
-  gridGame.classList.remove("hidden");
+const dingoPassedArray = [36, 37, 38, 39, 40, 41, 42, 43, 44];
+const logPassedArray = [27, 26, 25, 24, 23, 22, 21, 20, 19];
+
+// --------------------------- OBSTACLE TIMERS -------------------------------------------------------------
+dingoTimer = null;
+logTimer = null;
+truckTimer = null;
+
+// ---------------------------- GRID CREATION --------------------------------------------------------------
+function createGrid() {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement("div");
     gridGame.appendChild(cell);
     cells.push(cell);
   }
-  addKangaroo(kangarooCurrentPosition);
-  addJoey(joeyCurrentPosition);
-  addDingo(dingoCurrentPositions);
-  addLog(logCurrentPositions);
-  addTruck(truckCurrentPositions);
+}
+createGrid();
+
+// --------------------------------- START GAME BUTTON -------------------------------------------------------
+function startGame() {
+  welcomePage.classList.add("hidden");
+  gridGame.classList.remove("hidden");
+  score.classList.remove("hidden");
+  truckMove(2000);
+  logMove(2000);
+  dingoMove(2000);
 }
 
-// adds the kangaroo - remains in one place
+// --------------------------------- ADDING AND REMOVING THE KANGAROO AND JOEY -----------------------------------------------------
+// adds the kangaroo
 function addKangaroo(position) {
   cells[position].classList.add("kangaroo");
+}
+addKangaroo(kangarooCurrentPosition);
+
+// remove the kangaroo
+function removeKangaroo(position) {
+  cells[position].classList.remove("kangaroo");
 }
 
 // adds the joey
 function addJoey(position) {
   cells[position].classList.add("joey");
 }
+addJoey(joeyCurrentPosition);
 
 // removes the joey
 function removeJoey(position) {
   cells[position].classList.remove("joey");
 }
 
-// a function that initiates the collision
-function collisionImpact() {
-  removeJoey(joeyCurrentPosition);
-  joeyCurrentPosition = 62;
-  addJoey(joeyCurrentPosition);
+// -------------------------------- OBSTACLE COLLISION FUNCTION ------------------------------------------------------------------
+function obstacleCollision() {
+  if (
+    cells[joeyCurrentPosition].classList.contains("truck") ||
+    cells[joeyCurrentPosition].classList.contains("dingo") ||
+    (!cells[joeyCurrentPosition].classList.contains("log") &&
+      billabongArray.includes(joeyCurrentPosition))
+  ) {
+    removeJoey(joeyCurrentPosition);
+    joeyCurrentPosition = 62;
+    addJoey(joeyCurrentPosition);
+    lives = lives - 1;
+    livesDisplay.innerHTML = "❤️".repeat(lives);
+  }
+  if (!lives) {
+    endGame();
+  }
+  if (cells[joeyCurrentPosition].classList.contains("kangaroo")) {
+    winGame();
+    joeyCurrentPosition = 62;
+  }
 }
 
-// moves the joey
+// ------------------------------- ARROW KEY FUNCTION ---------------------------------------------------------------------------
 function handleKeyDown(event) {
   removeJoey(joeyCurrentPosition);
   // left is 37
@@ -75,26 +124,89 @@ function handleKeyDown(event) {
     joeyCurrentPosition += width;
   }
   if (cells[joeyCurrentPosition].classList.contains("dingo")) {
-    collisionImpact();
+    obstacleCollision();
   }
   if (cells[joeyCurrentPosition].classList.contains("truck")) {
-    collisionImpact();
+    obstacleCollision();
   }
 
   if (
     !cells[joeyCurrentPosition].classList.contains("log") &&
     billabongArray.includes(joeyCurrentPosition)
   ) {
-    collisionImpact();
+    obstacleCollision();
   }
-
+  if (
+    dingoPassedArray.includes(joeyCurrentPosition) ||
+    logPassedArray.includes(joeyCurrentPosition)
+  ) {
+    playerScore = playerScore + 100;
+    scoreDisplay.textContent = playerScore;
+  }
   addJoey(joeyCurrentPosition);
 
   // console.log(`position ${joeyCurrentPosition}`);
 }
+
+// ------------------------------- END GAME FUNCTION ----------------------------------------------------------------------------
+function endGame() {
+  clearInterval(logTimer);
+  clearInterval(truckTimer);
+  clearInterval(dingoTimer);
+  removeDingo(dingoCurrentPositions);
+  removeTruck(truckCurrentPositions);
+  removeLog(logCurrentPositions);
+  removeJoey(joeyCurrentPosition);
+  removeKangaroo(kangarooCurrentPosition);
+  console.log(`Your score is ${playerScore}`);
+
+  // const highScore = localStorage.getItem("high-score");
+  // if (!highScore || playerScore > highScore) {
+  //   localStorage.setItem("high-score", playerScore);
+  // }
+  // setTimeout(() => {
+  //   if (highScore >= playerScore) {
+  //     alert(`Your score was ${playerScore} but the high score is ${highScore}`);
+  //   } else {
+  //     alert(`New high score! ${playerScore}`);
+  //   }
+  // }, 50);
+  // console.log(`high score is ${highScore}`);
+  // textHighScore.innerHTML = highScore;
+}
+
+//  ------------------------------- WIN GAME FUNCTION ------------------------------------------------------------------------
+
+function winGame() {
+  gameOver.classList.remove("hidden");
+  gridGame.classList.add("hidden");
+  clearInterval(logTimer);
+  clearInterval(truckTimer);
+  clearInterval(dingoTimer);
+  removeDingo(dingoCurrentPositions);
+  removeTruck(truckCurrentPositions);
+  removeLog(logCurrentPositions);
+  removeJoey(joeyCurrentPosition);
+  removeKangaroo(kangarooCurrentPosition);
+  console.log(`win`);
+}
+
+//  -------------------------------- RESET GAME FUNCTION --------------------------------------------------------------------
+function reset() {
+  playerScore = 0;
+  scoreDisplay.textContent = playerScore;
+  lives = 8;
+  livesDisplay.innerHTML = "❤️".repeat(lives);
+  startGame();
+  addJoey(joeyCurrentPosition);
+  addKangaroo(kangarooCurrentPosition);
+  gameOver.classList.add("hidden");
+}
+
+document.addEventListener("click", reset);
 document.addEventListener("keydown", handleKeyDown);
 
-// TRUCK CONTROLS --------------------------
+// ---------------------------------- TRUCK CONTROLS - ADD, REMOVE, MOVE ----------------------------------------------------
 function addTruck(truckPosition) {
   for (let i = 0; i < truckPosition.length; i++) {
     cells[truckPosition[i]].classList.add("truck");
@@ -107,22 +219,21 @@ function removeTruck(truckPosition) {
 }
 
 function truckMove(interval) {
-  timer = setInterval(() => {
+  truckTimer = setInterval(() => {
     removeTruck(truckCurrentPositions);
     if (truckCurrentPositions.includes(17)) {
       truckCurrentPositions = [15, 12, 9];
     } else {
-      console.log(truckCurrentPositions);
       truckCurrentPositions = truckCurrentPositions.map((element) => {
         return (element += 1);
       });
     }
     addTruck(truckCurrentPositions);
+    obstacleCollision();
   }, interval);
 }
-truckMove(2000);
 
-// LOG CONTROLS -------------------------------
+// ---------------------------------- LOG CONTROLS - ADD, REMOVE, MOVE -------------------------------------------------------
 function addLog(logPosition) {
   for (let i = 0; i < logPosition.length; i++) {
     cells[logPosition[i]].classList.add("log");
@@ -135,12 +246,11 @@ function removeLog(logPosition) {
 }
 
 function logMove(interval) {
-  timer = setInterval(() => {
+  logTimer = setInterval(() => {
     removeLog(logCurrentPositions);
     if (logCurrentPositions.includes(35)) {
       logCurrentPositions = [33, 30, 27];
     } else {
-      console.log(logCurrentPositions);
       logCurrentPositions = logCurrentPositions.map((element) => {
         return (element += 1);
       });
@@ -148,9 +258,8 @@ function logMove(interval) {
     addLog(logCurrentPositions);
   }, interval);
 }
-logMove(2000);
 
-// DINGO CONTROLS -----------------------
+// ---------------------------------- DINGO CONTROLS - ADD, REMOVE, MOVE ---------------------------------------------------
 function addDingo(dingoPosition) {
   for (let i = 0; i < dingoPosition.length; i++) {
     cells[dingoPosition[i]].classList.add("dingo");
@@ -163,19 +272,19 @@ function removeDingo(dingoPosition) {
 }
 
 function dingoMove(interval) {
-  timer = setInterval(() => {
+  dingoTimer = setInterval(() => {
     removeDingo(dingoCurrentPositions);
     if (dingoCurrentPositions.includes(53)) {
       dingoCurrentPositions = [51, 48, 45];
     } else {
-      console.log(dingoCurrentPositions);
       dingoCurrentPositions = dingoCurrentPositions.map((element) => {
         return (element += 1);
       });
     }
     addDingo(dingoCurrentPositions);
+    obstacleCollision();
   }, interval);
 }
-dingoMove(2000);
 
-start.addEventListener("click", startGame);
+startButton.addEventListener("click", startGame);
+startAgain.addEventListener("click", reset);
