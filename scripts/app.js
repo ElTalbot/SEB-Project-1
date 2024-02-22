@@ -18,6 +18,7 @@ const height = 7;
 const cellCount = width * height;
 const cells = [];
 const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
+const trackArray = [45, 46, 47, 48, 49, 50, 51, 52, 53];
 
 // -------------------------- VARIABLES DEFINING SCORES AND LIVES ------------------------------------------
 
@@ -41,6 +42,8 @@ let truckCurrentPositions = [15, 12, 9];
 
 const foodScoreOne = 40;
 const foodScoreTwo = 24;
+const water = document.querySelector("water");
+const track = document.querySelector("track");
 
 // --------------------------- OBSTACLE TIMERS -------------------------------------------------------------
 dingoTimer = null;
@@ -221,6 +224,8 @@ function reset() {
   livesDisplay.innerHTML = "❤️".repeat(lives);
   livesPopUp.innerHTML = "❤️".repeat(lives);
   startGame();
+  removeJoey(joeyCurrentPosition);
+  joeyCurrentPosition = 62;
   addJoey(joeyCurrentPosition);
   addKangaroo(kangarooCurrentPosition);
   addFoodOne(foodScoreOne);
@@ -310,6 +315,13 @@ function logMove(interval) {
   }, interval);
 }
 
+function addWater() {
+  for (let i = width * 3; i < width * 4; i++) {
+    cells[i].classList.add("water");
+  }
+}
+addWater(billabongArray);
+
 // ---------------------------------- DINGO CONTROLS - ADD, REMOVE, MOVE ---------------------------------------------------
 function addDingo(dingoPosition) {
   for (let i = 0; i < dingoPosition.length; i++) {
@@ -336,6 +348,13 @@ function dingoMove(interval) {
     obstacleCollision();
   }, interval);
 }
+
+function addTrack() {
+  for (let i = width * 5; i < width * 6; i++) {
+    cells[i].classList.add("track");
+  }
+}
+addTrack(trackArray);
 
 startButton.addEventListener("click", startGame);
 startAgain.addEventListener("click", reset);
