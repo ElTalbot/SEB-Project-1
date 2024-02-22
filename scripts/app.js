@@ -5,11 +5,11 @@ const startButton = document.getElementById("start");
 const gridGame = document.querySelector(".grid");
 const welcomePage = document.querySelector(".welcome-page");
 const score = document.querySelector(".score-board");
+const audio = document.querySelector(".audio");
 const endGame = document.querySelector(".end-game");
 const winGame = document.querySelector(".win-game");
 
 // reset buttons
-const startAgain = document.getElementById("restart");
 const tryAgain = document.getElementById("try-again");
 const playAgain = document.getElementById("play-again");
 
@@ -19,7 +19,31 @@ const cellCount = width * height;
 const cells = [];
 const billabongArray = [27, 28, 29, 30, 31, 32, 33, 34, 35];
 const trackArray = [45, 46, 47, 48, 49, 50, 51, 52, 53];
+const roadArray = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
+// -------------------------- AUDIO CONTROLS ---------------------------------------------------------------
+
+const playButton = document.getElementById("on");
+const muteButton = document.getElementById("off");
+const audioElement = document.querySelector("audio");
+
+function muteAudio() {
+  audioElement.muted = true;
+  muteButton.classList.add("hidden");
+  playButton.classList.remove("hidden");
+  console.log(`audio`);
+}
+
+muteButton.addEventListener("click", muteAudio);
+
+function playAudio() {
+  audioElement.muted = false;
+  muteButton.classList.remove("hidden");
+  playButton.classList.add("hidden");
+  console.log(`audio on`);
+}
+
+playButton.addEventListener("click", playAudio);
 // -------------------------- VARIABLES DEFINING SCORES AND LIVES ------------------------------------------
 
 let playerScore = 0;
@@ -44,6 +68,7 @@ const foodScoreOne = 40;
 const foodScoreTwo = 24;
 const water = document.querySelector("water");
 const track = document.querySelector("track");
+const road = document.querySelector("road");
 
 // --------------------------- OBSTACLE TIMERS -------------------------------------------------------------
 dingoTimer = null;
@@ -54,6 +79,7 @@ truckTimer = null;
 function createGrid() {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement("div");
+    cell.innerText = i;
     gridGame.appendChild(cell);
     cells.push(cell);
   }
@@ -65,6 +91,7 @@ function startGame() {
   welcomePage.classList.add("hidden");
   gridGame.classList.remove("hidden");
   score.classList.remove("hidden");
+  audio.classList.remove("hidden");
   textHighScore.innerHTML = highScore;
   truckMove(2000);
   logMove(2000);
@@ -259,7 +286,6 @@ function foodScoring() {
   textHighScore.innerHTML = highScore;
 }
 
-startAgain.addEventListener("click", reset);
 document.addEventListener("keydown", handleKeyDown);
 
 // ---------------------------------- TRUCK CONTROLS - ADD, REMOVE, MOVE ----------------------------------------------------
@@ -277,17 +303,23 @@ function removeTruck(truckPosition) {
 function truckMove(interval) {
   truckTimer = setInterval(() => {
     removeTruck(truckCurrentPositions);
-    if (truckCurrentPositions.includes(17)) {
-      truckCurrentPositions = [15, 12, 9];
+    if (truckCurrentPositions.includes(9)) {
+      truckCurrentPositions = [17, 15, 13, 11];
     } else {
       truckCurrentPositions = truckCurrentPositions.map((element) => {
-        return (element += 1);
+        return (element -= 1);
       });
     }
     addTruck(truckCurrentPositions);
     obstacleCollision();
   }, interval);
 }
+function addRoad() {
+  for (let i = width * 1; i < width * 2; i++) {
+    cells[i].classList.add("road");
+  }
+}
+addRoad(roadArray);
 
 // ---------------------------------- LOG CONTROLS - ADD, REMOVE, MOVE -------------------------------------------------------
 function addLog(logPosition) {
@@ -337,11 +369,11 @@ function removeDingo(dingoPosition) {
 function dingoMove(interval) {
   dingoTimer = setInterval(() => {
     removeDingo(dingoCurrentPositions);
-    if (dingoCurrentPositions.includes(53)) {
-      dingoCurrentPositions = [51, 48, 45];
+    if (dingoCurrentPositions.includes(45)) {
+      dingoCurrentPositions = [53, 51, 49, 47];
     } else {
       dingoCurrentPositions = dingoCurrentPositions.map((element) => {
-        return (element += 1);
+        return (element -= 1);
       });
     }
     addDingo(dingoCurrentPositions);
@@ -357,6 +389,5 @@ function addTrack() {
 addTrack(trackArray);
 
 startButton.addEventListener("click", startGame);
-startAgain.addEventListener("click", reset);
 tryAgain.addEventListener("click", reset);
-playAgain.addEventListener("click", reset);
+playAgain.addEventListener("click", startGame);
