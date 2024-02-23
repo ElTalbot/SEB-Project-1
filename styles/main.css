@@ -255,13 +255,13 @@ body {
 }
 
 .grid div.water {
-  background-image: url(../assets/water.png);
+  background-image: url(../assets/Billabong.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .grid div.log {
-  background-image: url(../assets/Log\ and\ water.png);
+  background-image: url(../assets/Billabong\ and\ Log.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -329,4 +329,40 @@ button {
 
 button:hover {
   background-color: #f06c46;
+}
+
+/* Mobile friendly */
+@media only screen and (max-width: 600px) {
+  .game-play {
+    width: 400px;
+    align-self: center;
+  }
+  .grid-wrapper {
+    width: 400px;
+  }
+  .grid {
+    width: 400px;
+  }
+  body {
+    margin: 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-board {
+    width: 400px;
+    justify-content: space-between;
+  }
+  .scores {
+    flex-direction: column;
+  }
+  .total-score {
+    justify-content: flex-end;
+  }
+  .audio-icons {
+    align-self: flex-start;
+  }
+  #lives {
+    margin-right: 20px;
+  }
 }
