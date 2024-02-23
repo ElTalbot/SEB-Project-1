@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Going Walkabout</title>
     <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Macondo&family=Neucha&display=swap" rel="stylesheet">
     <script defer src="./scripts/app.js"></script>
   </head>
   <body>
+    <section class="game-play">
+    <div class="score-board hidden">
+       <p class="total-score" id ="lives">❤️❤️❤️❤️❤️❤️❤️❤️</p>
+      <div class = "scores">
+        <p class="total-score">Total Score: <span id="total">0</span></p>
+        <p class="total-score" >High Score: <span id="high-score">0</span></p>     
+       </div> </div>
+       
+    </div>
+   
     <div class="grid-wrapper">
       <div class="grid hidden"></div>
       <div class="welcome-page">
+        <div class="welcome">
         <h1>Going Walkabout</h1>
         <h2>
           Joey has gone walkabout. Can you help him find his way back to his mum
@@ -18,17 +32,44 @@
         </h2>
         <h3>How to play?</h3>
         <p>
-          Using your arrow keys (←, ↑, →, ↓) help Joey reunite with his family
+          Using your arrow keys <span class="
+          arrows">(←, ↑, →, ↓)</span> help Joey reunite with his family. <br>
           Navigate Joey past the dingoes, use the log to get across the
-          billabong and dodge the incoming traffic of pick up trucks. Be
-          careful! If Joey collides with an obstacle or falls into the
-          billabong, he'll lose a life and be returned to the start. Joey starts
-          with eight lives. And don't forget each step closer to his family
-          earns you an extra 100points with another 400points when Joey returns
-          to his family. Press “start” and help Joey find his family.
+          billabong and dodge the incoming traffic of pick up trucks.
+          <p>Be careful! If Joey collides with an obstacle or falls into the
+          billabong, he'll lose a life and be returned to the start. </p>
+          <p>Joey starts with <span class="arrows">8</span> lives. <br>And don't forget make sure Joey gets a chance to snack along the way to earn you an extra <span class="arrows">100points</span>
+          <p>Press “start” and help Joey find his family.</p>
         </p>
         <button id="start">Start</button>
+        </div>
       </div>
+      <div class="win-game hidden">
+        <div class="win-game-section">
+          <p>Congratulations you successfully reunited Joey with his mum and sister,</p>
+         <p>and you had <span class="lives-pop-up">❤️❤️❤️❤️❤️❤️❤️❤️</span> lives remaining.</p>
+
+          <p>You got a score of <span class="total-pop-up"></span>. Great work!</p>
+          <button id="play-again">Play Again</button>
+        </div>
+      </div>
+      <div class="end-game hidden">
+        <div class="end-game-section">
+          <p>Oh dear, you just missed out on reuniting Joey and his mother. <br> Don't panic though, he managed to find his way back to the start, have another go and see how you get on</p>
+          <p>See if you can beat your score of <span class = "arrows" id="total-end-game"></span></p>
+          <button id="try-again">Try again</button>
+        </div>
+    </div>
+    
+    </section>
+    <div class="audio hidden">
+      <div class = "audio-how">
+        <img class="audio-icons hidden" id="on" src="assets/Off.png" alt="audio on mute icon">
+        <img class="audio-icons" id="off" src="assets/On.png" alt="audio aloud icon">
+        <div class="how-to">
+        <p id="how-title">How to play? </p>
+      <p class="how-to-play">Use your arrow keys to avoid the dingoes and passing pick up trucks AND use the log to cross the billabong to reunite Joey with his family.</p></div>
+        <audio src="audio/sunshine-108600.mp3" autoplay></audio>
     </div>
   </body>
 </html>

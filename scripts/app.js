@@ -314,12 +314,6 @@ function truckMove(interval) {
     obstacleCollision();
   }, interval);
 }
-function addRoad() {
-  for (let i = width * 1; i < width * 2; i++) {
-    cells[i].classList.add("road");
-  }
-}
-addRoad(roadArray);
 
 // ---------------------------------- LOG CONTROLS - ADD, REMOVE, MOVE -------------------------------------------------------
 function addLog(logPosition) {
@@ -380,13 +374,6 @@ function dingoMove(interval) {
     obstacleCollision();
   }, interval);
 }
-
-function addTrack() {
-  for (let i = width * 5; i < width * 6; i++) {
-    cells[i].classList.add("track");
-  }
-}
-addTrack(trackArray);
 
 startButton.addEventListener("click", startGame);
 tryAgain.addEventListener("click", reset);

@@ -1,5 +1,28 @@
 * {
   box-sizing: border-box;
+  font-family: "Neucha", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-image: linear-gradient(
+      0deg,
+      rgba(77, 12, 19, 0.9),
+      rgba(77, 12, 19, 0.9)
+    ),
+    url(../assets/outback\ Large.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Styling the section */
+.game-play {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0;
 }
 
 /* Styling the main divs */
@@ -11,6 +34,7 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   height: 700px;
   width: 900px;
+  border-radius: 10px;
 }
 
 /* this holds the game */
@@ -22,7 +46,7 @@
   height: 100%;
   height: 700px;
   width: 900px;
-  background-image: url(../assets/outback-landscape-acrylics\ copy.png);
+  border-radius: 4px;
 }
 
 /* this is the welcome page */
@@ -30,8 +54,150 @@
   width: inherit;
   height: inherit;
   align-items: center;
+  display: inherit;
+}
+.welcome {
+  max-width: 780px;
+  margin: 0 auto;
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(251, 208, 167, 0.6);
 }
 
+/* this is the end game page */
+.end-game-section {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(251, 208, 167, 0.6);
+}
+
+.end-game {
+  width: inherit;
+  height: inherit;
+  align-items: center;
+  display: inherit;
+}
+
+#try-again {
+  margin: 10px 0px;
+  display: block;
+}
+
+/* this is the win game page */
+.win-game {
+  width: inherit;
+  height: inherit;
+  align-items: center;
+  display: inherit;
+}
+
+.win-game-section {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(251, 208, 167, 0.6);
+}
+
+/* styling the scoreboard nav */
+.score-board {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 900px;
+  margin: 10px auto;
+  background-image: linear-gradient(
+      0deg,
+      rgba(251, 208, 167, 0.8),
+      rgba(251, 208, 167, 0.8)
+    ),
+    url(../assets/outback\ Large.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.total-score {
+  display: flex;
+  width: 160px;
+  line-height: 0px;
+}
+
+.scores {
+  display: flex;
+}
+
+#total {
+  margin: 0px 0px 0px 10px;
+}
+#high-score {
+  margin: 0px 0px 0px 10px;
+}
+
+/* styling the audio section */
+.audio {
+  display: flex;
+  width: 900px;
+  margin: 10px auto;
+  background-image: linear-gradient(
+      0deg,
+      rgba(251, 208, 167, 0.8),
+      rgba(251, 208, 167, 0.8)
+    ),
+    url(../assets/outback\ Large.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.audio-how {
+  display: flex;
+  height: 50px;
+}
+
+.audio-icons {
+  width: 20px;
+  height: 20px;
+  margin: 0px 20px 0px 10px;
+  display: flex;
+  align-self: center;
+}
+.how-to-play {
+  display: flex;
+  line-height: 0px;
+  height: 10px;
+  text-align: left;
+}
+
+.how-to {
+  display: flex;
+  flex-direction: column;
+}
+
+#how-title {
+  font-size: 20px;
+  width: 120px;
+  height: 10px;
+  display: inline;
+  line-height: 0px;
+  text-align: left;
+  margin: 12px 0px 6px 0px;
+}
 /* this toggles the welcome page and grid when 'start' is pressed */
 .hidden {
   display: none;
@@ -43,37 +209,98 @@
   flex-grow: 1;
   height: 14.2%;
   width: 11%;
+  border: none;
 }
 
 /* Creating the moving parts  */
 .grid div.kangaroo {
-  background-image: url(../assets/download.png);
+  background-image: url(../assets/Kangaroo.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
 }
 .grid div.joey {
-  background-image: url(../assets/istockphoto-666853146-612x612.jpg);
+  background-image: url(../assets/Joey.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
 }
+
 .grid div.dingo {
-  background-image: url(../assets/images.png);
+  background-image: url(../assets/Dingo.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
 }
+
+.grid div.water {
+  background-image: url(../assets/water.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .grid div.log {
-  background-image: url(../assets/hqdefault.jpg);
+  background-image: url(../assets/Log\ and\ water.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
 }
 
 .grid div.truck {
-  background-image: url(../assets/sketch-pick-up-truck-vector-19341681-removebg-preview.png);
+  background-image: url(../assets/Truck.png);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+}
+
+.grid div.food {
+  background-image: url(../assets/Grass.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+/* Text Variations CSS */
+h1 {
+  margin: 10px 0px;
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+h2 {
+  margin: 10px 0px 30px 0px;
+  text-align: center;
+}
+
+h3 {
+  margin: 10px 0px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.arrows {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+p {
+  margin: 10px 0px;
+  text-align: center;
+  line-height: 30px;
+}
+
+#start {
+  margin: 10px 0px;
+  display: block;
+}
+
+button {
+  font-size: 18px;
+  padding: 6px 10px;
+  background-color: rgba(253, 231, 177, 1);
+  border: 0px;
+  border-radius: 2px;
+  color: rgb(70, 36, 52);
+  box-shadow: 0px 0px 1.4px 0.4px rgb(227 207 159);
 }
