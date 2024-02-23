@@ -15,7 +15,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin: 100px;
+  margin: 200px;
 }
 
 /* Styling the section */
@@ -36,8 +36,8 @@ body {
   width: 900px;
   background-image: linear-gradient(
       0deg,
-      rgba(251, 208, 167, 0.8),
-      rgba(251, 208, 167, 0.8)
+      rgba(251, 208, 167, 0.4),
+      rgba(251, 208, 167, 0.4)
     ),
     url(../assets/outback\ Large.png);
   background-size: cover;
@@ -105,8 +105,8 @@ body {
   display: inherit;
   background-image: linear-gradient(
       0deg,
-      rgba(251, 208, 167, 0.4),
-      rgba(251, 208, 167, 0.4)
+      rgba(251, 208, 167, 0.2),
+      rgba(251, 208, 167, 0.2)
     ),
     url(../assets/outback\ Large.png);
   background-size: cover;
@@ -126,6 +126,16 @@ body {
   height: inherit;
   align-items: center;
   display: inherit;
+  background-image: linear-gradient(
+      0deg,
+      rgba(251, 208, 167, 0.2),
+      rgba(251, 208, 167, 0.2)
+    ),
+    url(../assets/outback\ Large.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px;
 }
 
 .win-game-section {
@@ -144,36 +154,38 @@ body {
 .score-board {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   width: 900px;
   margin: 10px auto;
   background-image: linear-gradient(
       0deg,
-      rgba(251, 208, 167, 0.8),
-      rgba(251, 208, 167, 0.8)
+      rgba(251, 208, 167, 0.4),
+      rgba(251, 208, 167, 0.4)
     ),
-    url(../assets/outback\ Large.png);
+    url(../assets/scoreboard.png);
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 4px;
   padding: 10px;
 }
 
-.total-score {
-  display: flex;
-  width: 160px;
-  line-height: 0px;
-}
-
 .scores {
   display: flex;
+  justify-content: space-between;
 }
 
+.total-score {
+  display: flex;
+  margin: 0px 20px 0px 0px;
+  font-size: 18px;
+}
 #total {
   margin: 0px 0px 0px 10px;
 }
 #high-score {
   margin: 0px 0px 0px 10px;
+}
+#lives {
+  margin-right: 80px;
 }
 
 /* styling the audio section */
@@ -205,27 +217,7 @@ body {
   display: flex;
   align-self: center;
 }
-.how-to-play {
-  display: flex;
-  line-height: 0px;
-  height: 10px;
-  text-align: left;
-}
 
-.how-to {
-  display: flex;
-  flex-direction: column;
-}
-
-#how-title {
-  font-size: 20px;
-  width: 120px;
-  height: 10px;
-  display: inline;
-  line-height: 0px;
-  text-align: left;
-  margin: 12px 0px 6px 0px;
-}
 /* this toggles the welcome page and grid when 'start' is pressed */
 .hidden {
   display: none;
@@ -238,7 +230,7 @@ body {
   height: 14.2%;
   width: 11%;
   border: solid 0.2px rgba(77, 12, 19, 0.9);
-  /* border-radius: 4px; */
+  border-radius: 4px;
 }
 
 /* Creating the moving parts  */
@@ -327,9 +319,14 @@ p {
 button {
   font-size: 18px;
   padding: 6px 10px;
-  background-color: rgba(253, 231, 177, 1);
+  background-color: #ef5c32;
   border: 0px;
   border-radius: 2px;
   color: rgb(70, 36, 52);
-  box-shadow: 0px 0px 1.4px 0.4px rgb(227 207 159);
+  box-shadow: 0px 0px 1.4px 0.4px #d7522d;
+  color: rgba(251, 208, 167, 1);
+}
+
+button:hover {
+  background-color: #f06c46;
 }

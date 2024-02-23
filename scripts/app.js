@@ -91,7 +91,6 @@ function startGame() {
   welcomePage.classList.add("hidden");
   gridGame.classList.remove("hidden");
   score.classList.remove("hidden");
-  audio.classList.remove("hidden");
   textHighScore.innerHTML = highScore;
   truckMove(2000);
   logMove(2000);
@@ -377,4 +376,4 @@ function dingoMove(interval) {
 
 startButton.addEventListener("click", startGame);
 tryAgain.addEventListener("click", reset);
-playAgain.addEventListener("click", startGame);
+playAgain.addEventListener("click", reset);

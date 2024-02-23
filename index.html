@@ -13,8 +13,10 @@
   <body>
     <section class="game-play">
     <div class="score-board hidden">
-       <p class="total-score" id ="lives">❤️❤️❤️❤️❤️❤️❤️❤️</p>
+       <img class="audio-icons hidden" id="on" src="assets/Off.png" alt="audio on mute icon">
+        <img class="audio-icons" id="off" src="assets/On.png" alt="audio aloud icon">
       <div class = "scores">
+        <p class="total-score" id ="lives">❤️❤️❤️❤️❤️❤️❤️❤️</p>
         <p class="total-score">Total Score: <span id="total">0</span></p>
         <p class="total-score" >High Score: <span id="high-score">0</span></p>     
        </div> </div>
@@ -59,17 +61,9 @@
           <p>See if you can beat your score of <span class = "arrows" id="total-end-game"></span></p>
           <button id="try-again">Try again</button>
         </div>
+         
     </div>
-    
+   <audio src="audio/fun-and-happy-ukulele-children-folk-acoustic-142099.mp3" autoplay></audio>
     </section>
-    <div class="audio hidden">
-      <div class = "audio-how">
-        <img class="audio-icons hidden" id="on" src="assets/Off.png" alt="audio on mute icon">
-        <img class="audio-icons" id="off" src="assets/On.png" alt="audio aloud icon">
-        <div class="how-to">
-        <p id="how-title">How to play? </p>
-      <p class="how-to-play">Use your arrow keys to avoid the dingoes and passing pick up trucks AND use the log to cross the billabong to reunite Joey with his family.</p></div>
-        <audio src="audio/sunshine-108600.mp3" autoplay></audio>
-    </div>
   </body>
 </html>
