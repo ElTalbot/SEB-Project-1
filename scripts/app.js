@@ -67,8 +67,6 @@ let truckCurrentPositions = [15, 12, 9];
 const foodScoreOne = 40;
 const foodScoreTwo = 24;
 const water = document.querySelector("water");
-const track = document.querySelector("track");
-const road = document.querySelector("road");
 
 // --------------------------- OBSTACLE TIMERS -------------------------------------------------------------
 dingoTimer = null;
