@@ -236,7 +236,7 @@ Although a solo project, my experience in this project has highlighted the impor
 
 However, being able to talk through the challenge with fellow students or instructors can be useful to help see things from a different perspective.
 
-### Bugs
+## Bugs
 
 There have been a couple of bugs mentioned in the challenges section above such as, the `setInterval()` function that moved the obstacles but another includes the nature of the start button and its position on the game board.
 
@@ -248,7 +248,7 @@ The issue was that using this same function on the reset button meant that every
 
 To mitigate this I decided to remove the reset button.
 
-### Future Improvements
+## Future Improvements
 
 I believe with every project there is always something to learn and to improve, learning along the way and feedback from others is how I hope projects such as these can progress and develop with time.
 
