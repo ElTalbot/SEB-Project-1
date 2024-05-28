@@ -10,8 +10,6 @@ Going Walkabout is a game based on the well-known game Frogger. The concept for 
 
 In order for Joey to reach his family he had to be navigated past a pack of dingoes, use the log to get across the Billabong and dodge the incoming traffic of pick-up trucks. If Joey collides with a dingo or truck or falls in the Billabong he will return to the start and the player will lose a life.
 
-This game was to be completed within the 4th week of our course and was our first project using JavaScript, CSS and HTML.
-
 ## Game Link
 
 [Going Walkabout](https://eltalbot.github.io/SEB-Project-1/)
@@ -168,7 +166,7 @@ Both these have different user flows therefore, using a `.hidden` class in CSS a
 
 ![Reset Game Code](<README Assets/Reset game.png>)
 
-### Challenges
+## Challenges
 
 I came across a number of challenges during this project, a couple that come to mind include the `setInterval` function that enabled the movement of the objects.
 
@@ -189,11 +187,11 @@ Another challenge was within the obstacle collision function - I had 3 obstacle 
 The challenge came with the array of cells containing the log - instead of the Joey returning to the start when he collides with the log, the difference here is the Joey needs to use the log to get over the Billabong so therefore, the Joey needs to be reset to the start when he misses the log and lands in an empty cell.
 
 After realising that what I wanted to achieve was the exact opposite of the other obstacle collisions, I was able to identify the appropriate operator.
-Using the same `if ()` statement yet adding the bang operator `!` and the `&&` logical operator meant I was able to reverse the logic and return the Joey to the start when the any cell in the Billabong array did not contain the log `&&` contained the Joey
+Using the same `if ()` statement yet adding the bang operator `!` and the `&&` logical operator meant I was able to reverse the logic and return the Joey to the start when the any cell in the Billabong array did not contain the log `&&` contained the Joey.
 
 ![Log Obstacle Code](<README Assets/Log Obstacle.png>)
 
-### Wins
+## Wins
 
 I found my first project quite a challenging process but looking back the biggest win was the audio element.
 
@@ -205,7 +203,7 @@ Being able to start audio on page load was important to me to create a more auth
 
 ![Audio mute and play image](<README Assets/Audio Buttons.png>)
 
-### Key Learnings/Takeaways
+## Key Learnings/Takeaways
 
 #### <ins>The importance of Pseudocode</ins>
 
